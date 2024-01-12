@@ -1,6 +1,10 @@
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
+  debugPrint("some Print");
   runApp(const GajiApp());
 }
 
@@ -16,7 +20,7 @@ class GajiApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const NavigationDrawerDemo(),//const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const NavigationDrawerPage(),//const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -68,15 +72,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class NavigationDrawerDemo extends StatefulWidget {
-  const NavigationDrawerDemo({Key? key}) : super(key: key);
+class NavigationDrawerPage extends StatefulWidget {
+  const NavigationDrawerPage({Key? key}) : super(key: key);
 
   @override
-  State<NavigationDrawerDemo> createState() => _NavigationDrawerDemoState();
+  State<NavigationDrawerPage> createState() => _NavigationDrawerPageState();
 }
 
-class _NavigationDrawerDemoState extends State<NavigationDrawerDemo> {
+class _NavigationDrawerPageState extends State<NavigationDrawerPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+
+  void fileWrite() async {
+    Directory appDocumentDirectory = await getApplicationDocumentsDirectory();
+    var today = DateTime.now();
+    var dateString = DateFormat("yyyyMMddhhmmss").format(today);
+
+    String appDocumentPath = appDocumentDirectory.path;
+    var file = File("$appDocumentPath/$dateString.txt");
+    file.writeAsString("$dateString: test1");
+    debugPrint("file.path: $file.path");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +141,17 @@ class _NavigationDrawerDemoState extends State<NavigationDrawerDemo> {
                 _key.currentState!.openDrawer(); //<-- SEE HERE
               },
               child: const Text(
-                'Elevated Button 1',
+                '메뉴 보이기',
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                debugPrint("onPressed fileWrite");
+                fileWrite();
+              },
+              child: const Text(
+                '파일 생성',
                 style: TextStyle(fontSize: 24),
               ),
             ),
