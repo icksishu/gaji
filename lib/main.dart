@@ -3,9 +3,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import "file/file_handler.dart";
+import "dart:developer" as developer;
 
 void main() {
-  debugPrint("some Print");
+  developer.log("some Print");
   runApp(const GajiApp());
 }
 
@@ -82,16 +83,10 @@ class NavigationDrawerPage extends StatefulWidget {
 
 class _NavigationDrawerPageState extends State<NavigationDrawerPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+  final FileHandler _fileHandler = FileHandler();
 
   void fileWrite() async {
-    Directory appDocumentDirectory = await getApplicationDocumentsDirectory();
-    var today = DateTime.now();
-    var dateString = DateFormat("yyyyMMddhhmmss").format(today);
-
-    String appDocumentPath = appDocumentDirectory.path;
-    var file = File("$appDocumentPath/$dateString.txt");
-    file.writeAsString("$dateString: test1");
-    debugPrint("file.path: $file.path");
+    _fileHandler.write();
   }
 
   @override
@@ -148,8 +143,8 @@ class _NavigationDrawerPageState extends State<NavigationDrawerPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                debugPrint("onPressed fileWrite");
-                fileWrite();
+                developer.log("onPressed fileWrite");
+                _fileHandler.write();
               },
               child: const Text(
                 '파일 생성',
