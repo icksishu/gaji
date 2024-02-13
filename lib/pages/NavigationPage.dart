@@ -1,6 +1,5 @@
-import "dart:ffi";
-
 import "package:flutter/material.dart";
+import "package:gaji/pages/connectionPage.dart";
 import "package:gaji/pages/summaryPage.dart";
 import "dart:developer" as developer;
 
@@ -19,6 +18,7 @@ class _NavigationPageState extends State<NavigationPage> {
   Map pageMap = {
     "welcome": const WelcomePage(),
     "summary": const SummaryPage(),
+    "connection": const ConnectionPage(),
   };
   String currentTitle = "init";
   String currentPageName = "welcome";
@@ -37,16 +37,17 @@ class _NavigationPageState extends State<NavigationPage> {
       else if(pageName == "summary") {
         currentTitle = (currentPage as SummaryPage).title;
       }
+      else if(pageName == "connection") {
+        currentTitle = (currentPage as ConnectionPage).title;
+      }
     });
   }
 
   @override
   void initState() {
-    developer.log("initState $currentTitle");
     super.initState();
     setState(() {
       currentTitle = "gaji";
-      developer.log("setState $currentTitle");
     });
   }
 
@@ -80,6 +81,16 @@ class _NavigationPageState extends State<NavigationPage> {
               onTap: () {
                 Navigator.pop(context);
                 _changePage("summary");
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.train,
+              ),
+              title: const Text('Connection'),
+              onTap: () {
+                Navigator.pop(context);
+                _changePage("connection");
               },
             ),
           ]
