@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gaji/pages/NavigationPage.dart';
 import "dart:developer" as developer;
-import 'pages/navigationDrawerPage.dart';
 
 void main() {
   developer.log("some Print");
@@ -19,7 +19,7 @@ class GajiApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const NavigationDrawerPage(),
+      home: const NavigationPage(),
     );
   }
 }

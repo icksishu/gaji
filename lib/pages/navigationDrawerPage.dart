@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gaji/pages/gajiHomePage.dart';
+import 'package:gaji/pages/welcomePage.dart';
 import '../file/file_handler.dart';
 import "dart:developer" as developer;
 
+/**
+ * 샘플 개발용. NavigationPage 가 최종 목표
+ */
 class NavigationDrawerPage extends StatefulWidget {
   const NavigationDrawerPage({Key? key}) : super(key: key);
 
@@ -12,6 +17,9 @@ class NavigationDrawerPage extends StatefulWidget {
 class _NavigationDrawerPageState extends State<NavigationDrawerPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
   final FileHandler _fileHandler = FileHandler();
+  final Widget gajiHomePage = const GajiHomePage(title: "temporary title");
+  final Widget welcomePage = const WelcomePage();
+
 
   void fileWrite() async {
     _fileHandler.write();
@@ -39,7 +47,8 @@ class _NavigationDrawerPageState extends State<NavigationDrawerPage> {
               ),
               title: const Text('Page 1'),
               onTap: () {
-                Navigator.pop(context);
+                //Navigator.pop(context);
+
               },
             ),
             ListTile(
@@ -48,7 +57,9 @@ class _NavigationDrawerPageState extends State<NavigationDrawerPage> {
               ),
               title: const Text('Page 2'),
               onTap: () {
-                Navigator.pop(context);
+                //Navigator.pop(context);
+                developer.log("ontab setState");
+                setState(() => {gajiHomePage});
               },
             ),
           ],
